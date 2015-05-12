@@ -21,11 +21,22 @@ trait Encoder {
     def compare(x: Tree, y :Tree) = y.frequency.compare(x.frequency)
   }
    
-  def encodeCharacter():java.util.BitSet = {
+  def encodeCharacter(ch: Char, known:Map[Char, BitSet]):java.util.BitSet = {
     new java.util.BitSet(2)
   }
   
-  def encodeWithTree(input: Iterable[Char], bitset:java.util.BitSet, tree: Tree):java.util.BitSet = {
+  def toBitSet(bits: List[Int]):java.util.BitSet = {
+    new java.util.BitSet(bits.length) //Horrible
+  }
+  
+  def buildEncodingTable(tree: Tree, code: List[Int], tableSoFar:Map[Char, List[Int]]):Map[Char, List[Int]] = {
+    tree match {
+      case Leaf(frequency:Int, ch: Char) => tableSoFar.updated(ch, code)
+      case Node(_:Int, left:Tree, right:Tree) => buildEncodingTable(left, 0::code, tableSoFar) ++ buildEncodingTable(right, 1::code, tableSoFar) 
+    }
+  }
+  
+  def encodeWithTree(input: Iterable[Char],  tree: Tree):java.util.BitSet = {
     new java.util.BitSet(2)
   }
   
