@@ -24,12 +24,10 @@ trait Encoder {
     def compare(x: Tree, y :Tree) = y.frequency.compare(x.frequency)
   }
    
-  def encodeCharacter(ch: Char, known:Map[Char, BitSet]):java.util.BitSet = {
-    new java.util.BitSet(2)
-  }
   
   def toBitSet(bits: List[Int]):java.util.BitSet = {
-    new java.util.BitSet(bits.length) //Horrible
+    new java.util.BitSet(bits.length) 
+    
   }
   
   def buildEncodingTable(tree: Tree, code: List[Int], tableSoFar:Map[Char, List[Int]]):Map[Char, List[Int]] = {
@@ -39,9 +37,6 @@ trait Encoder {
     }
   }
   
-  def encodeWithTree(input: Iterable[Char],  tree: Tree):java.util.BitSet = {
-    new java.util.BitSet(2)
-  }
   
   def merge(nodes: PriorityQueue[Tree]):Tree = {
     nodes.size match {
@@ -58,11 +53,20 @@ trait Encoder {
     }
   }
   
-  def buildTree(frequency:List[(Char, Int)]):Tree = {
+  def buildTree(frequency:Map[Char, Int]):Tree = {
 
     val nodes = new PriorityQueue[Tree]()
     for {(ch, freq) <- frequency} yield nodes.enqueue(Leaf(freq, ch)) 
     
     merge(nodes)
+  }
+  
+  def resolveFrequencies(chars: Array[Char]): Map[Char, Int] = {
+    chars.groupBy(identity).mapValues(_.size)
+  }
+  
+  def encode(chars:Array[Char]): List[Int] = {
+    val encodingTable = buildEncodingTable(buildTree(resolveFrequencies(chars)), List(), Map())
+    List() //Fold, etc
   }
 }
