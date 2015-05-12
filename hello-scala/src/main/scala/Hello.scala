@@ -1,5 +1,11 @@
+import java.io.File
+
+import scala.io.Source
+
 object Hello {
+
   def main(args: Array[String]): Unit = {
-    println("Hello, world!")
+    Source.fromFile(new File(args(0)), "UTF-8")
   }
+
 }
