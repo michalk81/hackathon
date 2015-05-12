@@ -12,6 +12,7 @@ object Hello {
       .mkString(System.getProperty("line.separator"))
       .toCharArray
 
+    val frequencies = resolveFrequencies(fileContent)
 
 
     val bitSet: util.BitSet = new util.BitSet(4)
@@ -20,7 +21,16 @@ object Hello {
     bitSet.set(2, true)
     bitSet.set(3, false)
 
-    Files.write(new File(args(1)).toPath, bitSet.toByteArray)
+    val outputFile = new File(args(1))
+    Files.write(outputFile.toPath, bitSet.toByteArray)
+
+    val encoded: Array[Byte] = Files.readAllBytes(outputFile.toPath)
+
+
+  }
+
+  def resolveFrequencies(chars: Array[Char]): Map[Char, Int] = {
+    chars.groupBy(identity).mapValues(_.size)
   }
 
 }

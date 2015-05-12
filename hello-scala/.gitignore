@@ -8,4 +8,8 @@
 .project
 .classpath
 *.iml
+<<<<<<< HEAD
 /bin/
+=======
+.idea
+>>>>>>> a7de92a2fb78655365c23ac9e58c762661fbc74f

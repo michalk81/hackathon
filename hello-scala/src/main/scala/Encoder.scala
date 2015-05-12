@@ -1,10 +1,13 @@
-import scala.collection.mutable.BitSet
 import scala.collection.mutable.PriorityQueue
 
-abstract class Tree(val frequency:Int)
-  
-case class Leaf(frequency:Int, symbol:Char) extends Tree(frequency)
-case class Node(frequency:Int, left: Tree, right: Tree) extends Tree(frequency)
+trait Tree {
+
+  def frequency: Int
+
+}
+
+case class Leaf(val frequency:Int, symbol:Char) extends Tree
+case class Node(val frequency:Int, left: Tree, right: Tree) extends Tree
 
 
 
